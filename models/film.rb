@@ -49,7 +49,7 @@ class Film
     SqlRunner.run(sql, values)
   end
 
-  def watched_by_customers()
+  def customers_booked()
     sql = '
       SELECT customers.* FROM customers
       INNER JOIN tickets ON customers.id = tickets.customer_id

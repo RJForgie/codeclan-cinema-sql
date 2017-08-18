@@ -1,4 +1,5 @@
 require_relative("../db/sql_runner")
+require_relative("ticket")
 
 class Customer
 
@@ -50,7 +51,7 @@ class Customer
     SqlRunner.run(sql, values)
   end
 
-  def films_watched()
+  def films_booked()
     sql = '
       SELECT films.* FROM films
       INNER JOIN tickets ON films.id = tickets.film_id
@@ -58,6 +59,14 @@ class Customer
     values = [@id]
     results = SqlRunner.run(sql, values)
     return Film.map_items(results)
+  end
+
+  def buy_ticket(film)
+    # if @funds < film.price then return "Insufficient funds"
+    @funds -= film.price
+    update
+    ticket = Ticket.new({ 'customer_id' => @id, 'film_id' => film.id })
+    ticket.save
   end
 
   def self.map_items(rows)

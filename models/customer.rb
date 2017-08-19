@@ -73,4 +73,14 @@ class Customer
     return rows.map {|row| Customer.new(row)}
   end
 
+  def how_many_tickets()
+    sql = '
+    SELECT tickets.* FROM tickets
+    WHERE customer_id = $1
+    ;'
+    values = [@id]
+    results = SqlRunner.run(sql, values)
+    return Ticket.map_items(results).count
+  end
+
 end

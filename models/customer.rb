@@ -61,12 +61,14 @@ class Customer
     return Film.map_items(results)
   end
 
-  def buy_ticket(film)
-    # if @funds < film.price then return "Insufficient funds"
-    @funds -= film.price
-    update
-    ticket = Ticket.new({ 'customer_id' => @id, 'film_id' => film.id })
-    ticket.save
+  def buy_ticket(film, screening)
+    if @funds < film.price then return "Insufficient funds"
+    else
+      @funds -= film.price
+      update
+      ticket = Ticket.new({ 'customer_id' => @id, 'film_id' => film.id, 'screening_id' => screening.id })
+      ticket.save
+    end
   end
 
   def self.map_items(rows)

@@ -73,4 +73,16 @@ class Film
     return Ticket.map_items(results).count
   end
 
+  def most_popular_screening_for_film()
+    sql = '
+      SELECT screening_id FROM tickets
+      WHERE film_id = $1
+      GROUP BY screening_id
+      ORDER BY COUNT(*) DESC
+      LIMIT    1;'
+      values = [@id]
+      results = SqlRunner.run(sql, values).first
+      return results
+  end
+
 end

@@ -7,26 +7,26 @@ class Screening
 
   def initialize( details )
     @id = details['id'].to_i
-    @screen = details['screen']
+    @film_id = details['film_id'].to_i
     @time = details['time']
   end
 
   def save()
     sql = '
-      INSERT INTO screenings (screen, time)
+      INSERT INTO screenings (film_id, time)
       VALUES ($1, $2)
       returning id;'
-      values = [@screen, @time]
+      values = [@film_id, @time]
       screening = SqlRunner.run( sql, values).first
       @id = screening['id'].to_i
   end
 
   def update()
     sql = '
-      UPDATE screenings SET (screen, time)
+      UPDATE screenings SET (film_id, time)
       = ($1, $2)
       WHERE id = $3;'
-      values = [@screen, @time, @id]
+      values = [@film_id, @time, @id]
       SqlRunner.run(sql, values)
   end
 

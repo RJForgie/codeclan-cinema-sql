@@ -73,7 +73,7 @@ class Film
     return Ticket.map_items(results).count
   end
 
-  def most_popular_screening_for_film()
+  def most_popular_screening()
     sql = '
       SELECT screening_id FROM tickets
       WHERE film_id = $1
